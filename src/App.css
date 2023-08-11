@@ -17,6 +17,9 @@
 
 .content {
   grid-area: content;
+  overflow-x: hidden;
+  background-color: #e6f7f6;
+  padding: 20px;
 }
 .navbar {
   grid-area: navbar;
@@ -55,6 +58,12 @@
   right: 20px;
 }
 
+@media (min-width: 880px) {
+  .modal-container {
+    display: none;
+  }
+}
+
 @media (max-width: 1000px) {
   .navlink h2 {
     margin-right: 0px;
@@ -67,7 +76,9 @@
     display: none;
   }
   .wrapper {
-    display: block;
+    grid-template-areas:
+      "navbar navbar"
+      "content content";
   }
   .navlink {
     display: inline;
