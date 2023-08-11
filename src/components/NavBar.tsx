@@ -1,10 +1,24 @@
+import { Link, useLocation } from "react-router-dom";
+import { AiOutlineAppstore } from "react-icons/ai";
+import { BiSolidCalendarEdit } from "react-icons/bi";
+import { RiBillLine } from "react-icons/ri";
+import { LiaUserInjuredSolid } from "react-icons/lia";
+
 export default function NavBar() {
+  const { pathname } = useLocation();
+
+  function closeOffcanvas() {
+    const offcanvas = document.getElementById("offcanvasNavbar")!;
+    const bsOffcanvas = new window.bootstrap.Offcanvas(offcanvas);
+    bsOffcanvas.hide();
+  }
+
   return (
     <nav className="navbar">
       <div className="container-fluid">
-        <a className="navbar-brand text-white" href="#">
+        <Link className="navbar-brand text-white" to="/">
           Hospital Management
-        </a>
+        </Link>
         <button
           className="navbar-toggler bg-body-tertiary"
           type="button"
@@ -17,7 +31,6 @@ export default function NavBar() {
         </button>
         <div
           className="offcanvas offcanvas-end"
-          // tabIndex="-1"
           id="offcanvasNavbar"
           aria-labelledby="offcanvasNavbarLabel"
         >
@@ -35,24 +48,51 @@ export default function NavBar() {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <Link
+                  className={`nav-link ${pathname === "/" ? "active" : ""}`}
+                  aria-current="page"
+                  to="/"
+                  onClick={closeOffcanvas}
+                >
+                  <AiOutlineAppstore />
                   Dashboard
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link
+                  className={`nav-link ${
+                    pathname === "/patient" ? "active" : ""
+                  }`}
+                  to="/patient"
+                  onClick={closeOffcanvas}
+                >
+                  <LiaUserInjuredSolid />
                   Patients
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link
+                  className={`nav-link ${
+                    pathname === "/appointments" ? "active" : ""
+                  }`}
+                  to="/appointments"
+                  onClick={closeOffcanvas}
+                >
+                  <BiSolidCalendarEdit />
                   Appointments
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link
+                  className={`nav-link ${
+                    pathname === "/billing" ? "active" : ""
+                  }`}
+                  to="/billing"
+                  onClick={closeOffcanvas}
+                >
+                  <RiBillLine />
                   Billing
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
