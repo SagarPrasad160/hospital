@@ -43,8 +43,8 @@ function Billing({ appointments, patients }: BillingProps) {
   const renderedUsers = fileteredUsers.map((patient) => {
     return (
       <li
-        className={`list-group-item d-flex flex-wrap w-100  mx-auto mb-1 ${
-          patient.id === id ? "active" : ""
+        className={`list-group-item d-flex flex-wrap w-100 mx-auto mb-1 ${
+          patient.id === id ? "bg-info" : ""
         }`}
         key={patient.id}
       >
@@ -84,7 +84,7 @@ function Billing({ appointments, patients }: BillingProps) {
   });
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row mb-4">
         <div className="col">
           <h1>Billing Overview</h1>
@@ -102,7 +102,7 @@ function Billing({ appointments, patients }: BillingProps) {
         </div>
         <div className="col-md-8">
           <div className="h-auto border p-4 rounded-3 bg-white">
-            <div>
+            <div className="table-responsive">
               <div className="fs-5 fw-bold mb-2">Billing Details</div>
               <table className="table table-borderless table-secondary mb-0">
                 <thead>
