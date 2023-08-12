@@ -23,7 +23,6 @@ export default function Appointments({
   useEffect(() => {
     if (id) {
       const patient = patients.find((patient) => patient.id === id);
-      console.log(patient?.name);
       if (patient) {
         setName(patient.name);
       }

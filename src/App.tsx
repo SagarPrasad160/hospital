@@ -96,8 +96,6 @@ function App() {
     }
   };
 
-  console.log(appointments);
-
   return (
     <div className="wrapper">
       <Router>
