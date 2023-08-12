@@ -51,6 +51,9 @@
 .show-btn {
   visibility: hidden;
 }
+.patients-list {
+  min-height: 100px;
+}
 
 .btn-danger {
   position: absolute;

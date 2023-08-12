@@ -1,12 +1,59 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export default function Appointments() {
+import { User } from "../models/User";
+import { appointment } from "../models/Appointment";
+import { Service } from "../models/Service";
+
+interface AppointmentsPageProps {
+  patients: User[];
+  addAppointments: (appointment: appointment) => void;
+}
+
+export default function Appointments({
+  patients,
+  addAppointments,
+}: AppointmentsPageProps) {
+  const [name, setName] = useState<string>("");
+  const [service, setService] = useState<string>("");
+
   const params = useParams();
 
   const id = Object.values(params)[0];
-  console.log(id);
+  useEffect(() => {
+    if (id) {
+      const patient = patients.find((patient) => patient.id === id);
+      console.log(patient?.name);
+      if (patient) {
+        setName(patient.name);
+      }
+    }
+  }, [id, patients]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // confirm name given with the patient records
+    const patient = patients.find((patient) => patient.name === name);
+    if (!patient) {
+      alert("Patient does not exists!");
+      return;
+    }
+    // check if the selected service is one of the valid service types
+    if (
+      !["Consultation", "XRay", "RoutineCheckup", "CTScan"].includes(service)
+    ) {
+      alert("Please choose a valid service!");
+      return;
+    }
+    const newAppointment: appointment = {
+      user: patient,
+      service: service as Service,
+    };
+    addAppointments(newAppointment);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="patientName" className="form-label">
           Patient Name
@@ -16,6 +63,8 @@ export default function Appointments() {
           className="form-control"
           id="patientName"
           aria-describedby="patientName"
+          value={name}
+          onChange={({ target }) => setName(target.value)}
         />
       </div>
       <div className="mb-3">
@@ -26,8 +75,10 @@ export default function Appointments() {
           className="form-select"
           id="serviceSelect"
           aria-label="select a service  with button addon"
+          value={service}
+          onChange={({ target }) => setService(target.value)}
         >
-          <option defaultValue={"Choose Service"}>Choose Service</option>
+          <option value="">Choose Service</option>
           <option value="Consultation">Consultation</option>
           <option value="XRay">XRay</option>
           <option value="RoutineCheckup">Routine Checkup</option>
