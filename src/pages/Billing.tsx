@@ -3,21 +3,25 @@ import { useParams, Link } from "react-router-dom";
 
 // models
 import { appointment } from "../models/Appointment";
+import { User } from "../models/User";
 
 // utility
 import { removeDuplicateUsers } from "../utils/removeDuplicates";
+import { ServicePrices } from "../utils/ServicePrices";
 
 interface BillingProps {
   appointments: appointment[];
+  patients: User[];
 }
 
-function Billing({ appointments }: BillingProps) {
+function Billing({ appointments, patients }: BillingProps) {
   // get users from appointments array
   const users = appointments.map((appointment) => appointment.user);
 
   const fileteredUsers = removeDuplicateUsers(users);
 
   const [userAppointments, setUserAppointments] = useState<appointment[]>([]);
+  const [currentUser, setCurrentUser] = useState<User>();
 
   const params = useParams();
   const id = Object.values(params)[0];
@@ -25,18 +29,23 @@ function Billing({ appointments }: BillingProps) {
   useEffect(() => {
     // check if there exists an id in the params
     if (id) {
+      // find the user with the id
+      const patient = patients.find((p) => p.id === id);
+      setCurrentUser(patient);
       // find all the appointments of the user with that id
       const allUserAppointments = appointments.filter(({ user }) => {
         return user.id === id;
       });
       setUserAppointments(allUserAppointments);
     }
-  }, [id, appointments]);
+  }, [id, appointments, patients]);
 
   const renderedUsers = fileteredUsers.map((patient) => {
     return (
       <li
-        className="list-group-item d-flex flex-wrap w-100  mx-auto mb-1"
+        className={`list-group-item d-flex flex-wrap w-100  mx-auto mb-1 ${
+          patient.id === id ? "active" : ""
+        }`}
         key={patient.id}
       >
         <div>
@@ -62,12 +71,14 @@ function Billing({ appointments }: BillingProps) {
   });
 
   const renderedAppointments = userAppointments.map((usrApt, index) => {
+    const servicePrice = ServicePrices[usrApt.service];
     return (
       <tr key={usrApt.service}>
         <th scope="row">{index + 1}</th>
-        <td>{usrApt.user.name}</td>
         <td>{usrApt.service}</td>
         <td>{usrApt.quantity}</td>
+        <td>{servicePrice}</td>
+        <td>{servicePrice * usrApt.quantity}</td>
       </tr>
     );
   });
@@ -81,20 +92,76 @@ function Billing({ appointments }: BillingProps) {
       </div>
       <div className="row">
         <div className="col-md-4">
-          <ul className="list-group">{renderedUsers}</ul>
+          <ul className="list-group">
+            {renderedUsers.length ? (
+              renderedUsers
+            ) : (
+              <div>Add An Appointment</div>
+            )}
+          </ul>
         </div>
         <div className="col-md-8">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Sr.no</th>
-                <th scope="col">Patient Name</th>
-                <th scope="col">Service Type</th>
-                <th scope="col">Quantity</th>
-              </tr>
-            </thead>
-            <tbody>{renderedAppointments}</tbody>
-          </table>
+          <div className="h-auto border p-4 rounded-3 bg-white">
+            <div>
+              <div className="fs-5 fw-bold mb-2">Billing Details</div>
+              <table className="table table-borderless table-secondary mb-0">
+                <thead>
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Bill No.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{currentUser?.name}</td>
+                    <td>{currentUser?.age}</td>
+                    <td>{currentUser?.sex}</td>
+                    <td>{currentUser?.billNumber}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table className="table table-borderless">
+                <thead>
+                  <tr>
+                    <th scope="col">Sr.no</th>
+                    <th scope="col">Service Type</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>{renderedAppointments}</tbody>
+              </table>
+            </div>
+            <div>
+              <table className="table table-borderless table-secondary">
+                <thead>
+                  <tr>
+                    <th scope="col">Tax</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>200</td>
+                    <td>50</td>
+                    <td>
+                      &#8377;
+                      {currentUser &&
+                        userAppointments.reduce((acc, curr) => {
+                          const servicePrice =
+                            ServicePrices[curr.service] * curr.quantity;
+                          return acc + servicePrice;
+                        }, 0) + 150}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

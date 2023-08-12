@@ -127,7 +127,9 @@ function App() {
             />
             <Route
               path="/billing/*"
-              element={<Billing appointments={appointments} />}
+              element={
+                <Billing patients={records} appointments={appointments} />
+              }
             />
           </Routes>
         </div>
