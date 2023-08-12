@@ -35,9 +35,17 @@ function getUsers(): User[] {
   return JSON.parse(usersJSON);
 }
 
+function getAppointments(): appointment[] {
+  const appointmentsJSON = localStorage.getItem("appointments");
+  if (!appointmentsJSON) return [];
+  return JSON.parse(appointmentsJSON);
+}
+
 function App() {
   const [records, setRecords] = useState<User[]>(getUsers());
-  const [appointments, setAppointments] = useState<appointment[]>([]);
+  const [appointments, setAppointments] = useState<appointment[]>(
+    getAppointments()
+  );
 
   const addRecord = () => {
     const newRecord = createRandomUser();
@@ -56,8 +64,36 @@ function App() {
     localStorage.setItem("users", JSON.stringify(users));
   };
 
-  const addAppointment = (appointment: appointment) => {
-    setAppointments([...appointments, appointment]);
+  const addAppointment = (newAppointment: appointment) => {
+    // get the user who's appointment is getting booked
+    const { user, service } = newAppointment;
+
+    // check in appointments if the user had previously booked an appointment
+    // the service
+    const appointment = appointments.find(
+      (a) => a.user.id === user.id && a.service === service
+    );
+
+    if (appointment) {
+      // if an appointment exists
+      //  increase the quantity of appointment and update appointments
+      const updatedAppointments = appointments.map((a) => {
+        if (a.user.id === user.id && a.service === service) {
+          return {
+            ...appointment,
+            quantity: a.quantity + 1,
+          };
+        }
+        return a;
+      });
+      setAppointments(updatedAppointments);
+      localStorage.setItem("appointments", JSON.stringify(updatedAppointments));
+    } else {
+      setAppointments([...appointments, newAppointment]);
+      const currentAppointments = getAppointments();
+      currentAppointments.push(newAppointment);
+      localStorage.setItem("appointments", JSON.stringify(currentAppointments));
+    }
   };
 
   console.log(appointments);
@@ -89,7 +125,10 @@ function App() {
                 />
               }
             />
-            <Route path="/billing" element={<Billing />} />
+            <Route
+              path="/billing/*"
+              element={<Billing appointments={appointments} />}
+            />
           </Routes>
         </div>
       </Router>

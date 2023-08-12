@@ -48,8 +48,13 @@ export default function Appointments({
     const newAppointment: appointment = {
       user: patient,
       service: service as Service,
+      quantity: 1,
     };
     addAppointments(newAppointment);
+
+    // reset form fields
+    setName("");
+    setService("");
   };
 
   return (
