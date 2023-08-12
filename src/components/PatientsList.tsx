@@ -13,7 +13,7 @@ function PatientsList({ patients, removePatient }: PatientsProps) {
     return (
       <div key={patient.id}>
         <li
-          className="list-group-item d-flex w-100  mx-auto mb-1"
+          className="list-group-item d-flex flex-wrap w-100  mx-auto mb-1"
           key={patient.id}
         >
           <div>
