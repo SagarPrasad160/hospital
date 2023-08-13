@@ -18,6 +18,7 @@ import { appointment } from "./models/Appointment";
 import Patients from "./pages/Patients";
 import Appointments from "./pages/Appointments";
 import Billing from "./pages/Billing";
+import Dashboard from "./pages/Dashboard";
 
 function getUsers(): User[] {
   // fetch users from local Storage
@@ -103,7 +104,7 @@ function App() {
         <SideBar />
         <div className="content">
           <Routes>
-            <Route path="/" element={<div className="">Dashboard</div>} />
+            <Route path="/" element={<Dashboard />} />
             <Route
               path="/patient"
               element={
