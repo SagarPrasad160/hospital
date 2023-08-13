@@ -69,6 +69,9 @@ Here are some screenshots of the app:
 
 ![Dashboard Page](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691916827/Dashboard_Screen_dz8a1a.png)
 
+### Navigation Overlay on Small screen devices 
+
+![Nav Overlay](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691921971/NavModal_qdhcja.png)
 
 ## Note
 
