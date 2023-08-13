@@ -53,6 +53,23 @@ The Dashboard page showcases:
 - A carousel displaying images related to the hospital.
 - Dummy user testimonials praising the hospital's services.
 
+## Screenshots
+
+Here are some screenshots of the app:
+
+### Patients Page
+
+![Patients Page](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691916807/Patients_Screen_hiqa0l.png)
+
+### Billing Page
+
+![Billing Page](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691916075/Billing_Screen_u7y5aq.png)
+
+### Dashboard Page
+
+![Dashboard Page](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691916827/Dashboard_Screen_dz8a1a.png)
+
+
 ## Note
 
 Please note that the app uses randomly generated patient data using faker-js, which might result in minor inconsistencies between avatars, ages, and genders. This is for demonstration purposes and does not affect the core functionality of the app.
