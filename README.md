@@ -1,27 +1,81 @@
-# React + TypeScript + Vite
+# Hospital Management React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+This is a simple hospital management application built with React. It allows hospital administrators to manage patients, book appointments, and view billing information.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## Expanding the ESLint configuration
+To run the app locally, follow these steps:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `npm install` to install the required dependencies.
+4. Run `npm run dev` to start the development server.
 
-- Configure the top-level `parserOptions` property like this:
+## Routes
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+The app features several routes to handle different aspects of hospital management:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- `/#`: Dashboard page displaying a carousel of hospital images with user testimonials.
+- `/#/patient`: List of all patients, allowing for patient creation and deletion.
+- `/#/appointments/:patientId`: Form for booking appointments with service selection.
+- `/#/billing/:patientId`: Patient billing details, including appointment charges according to service.
+
+## Functionality
+
+### Patients Page
+
+- Displays a list of patients with their names, ages, genders, and avatars.
+- Allows administrators to create new patients by clicking "+ Add Patient".
+- Allows administrators to delete patients by clicking the red cross icon.
+
+### Appointments Page
+
+- Allows administrators to book appointments for patients by selecting a service type.
+
+### Billing Page
+
+- Displays billing information for patients based on their booked appointments.
+- Shows service types, quantities, prices, and total amounts.
+- Provides tax and discount information for the final total.
+
+## Responsive Design
+
+The app is fully responsive and adapts to different screen sizes:
+
+- Utilizes a NavModal overlay for navigation on small screen devices.
+
+## Dashboard
+
+The Dashboard page showcases:
+
+- A carousel displaying images related to the hospital.
+- Dummy user testimonials praising the hospital's services.
+
+## Screenshots
+
+Here are some screenshots of the app:
+
+### Patients Page
+
+![Patients Page](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691916807/Patients_Screen_hiqa0l.png)
+
+### Billing Page
+
+![Billing Page](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691916075/Billing_Screen_u7y5aq.png)
+
+### Dashboard Page
+
+![Dashboard Page](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691916827/Dashboard_Screen_dz8a1a.png)
+
+### Navigation Overlay on Small screen devices 
+
+![Nav Overlay](https://res.cloudinary.com/dzzazpzrs/image/upload/v1691921971/NavModal_qdhcja.png)
+
+## Note
+
+Please note that the app uses randomly generated patient data using faker-js, which might result in minor inconsistencies between avatars, ages, and genders. This is for demonstration purposes and does not affect the core functionality of the app.
+
+Feel free to explore the app and manage hospital-related tasks efficiently!
+
