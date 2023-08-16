@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { User } from "../models/User";
 import { appointment } from "../models/Appointment";
@@ -18,6 +18,7 @@ export default function Appointments({
   const [service, setService] = useState<string>("");
 
   const params = useParams();
+  const navigate = useNavigate();
 
   const id = Object.values(params)[0];
   useEffect(() => {
@@ -54,6 +55,9 @@ export default function Appointments({
     // reset form fields
     setName("");
     setService("");
+
+    //programmatically navigate to billing page
+    navigate(`/billing/${patient.id}`);
   };
 
   return (
