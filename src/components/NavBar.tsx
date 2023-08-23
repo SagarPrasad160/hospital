@@ -12,7 +12,7 @@ export default function NavBar() {
 
   return (
     <nav className="navbar nav">
-      <div className="navbar-header d-flex p-2">
+      <div className="navbar-header d-flex justify-content-between p-3 w-100">
         <div className="navbar-brand text-white">Hospital Management</div>
         <button className="btn btn-light show-btn" onClick={handleClick}>
           <AiOutlineAlignCenter />
